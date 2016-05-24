@@ -1,0 +1,27 @@
+#################################################################################################
+
+Function ProjectDetail(DetailType As String, PjID As Long) As String
+On Error Resume Next
+
+If Len(VarReturnProjects) < 1 Then
+    Call ReadProjects
+End If
+
+
+
+Dim wrtTmp As String
+Dim StartPosDetailType As Long
+Dim EndPosDetailType As Long
+
+wrtTmp = Mid(VarReturnProjects, InStr(VarReturnProjects, Chr(34) & "id" & Chr(34) & ": " & PjID), 25000)
+
+StartPosDetailType = InStr(wrtTmp, Chr(34) & DetailType & Chr(34))
+StartPosDetailType = InStr(StartPosDetailType, wrtTmp, ":") + 1
+EndPosDetailType = InStr(StartPosDetailType, wrtTmp, ",")
+
+ProjectDetail = Trim(Replace(Mid(wrtTmp, StartPosDetailType, EndPosDetailType - StartPosDetailType), Chr(34), ""))
+
+
+End Function
+
+#################################################################################################
